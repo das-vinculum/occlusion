@@ -27,40 +27,25 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.eclipse.swt.org.eclipse.swt.cocoa.macosx.x86_64.4.3.swt</groupId>
-            <artifactId>org.eclipse.swt.cocoa.macosx.x86_64</artifactId>
+            <groupId>asg.cliche</groupId>
+            <artifactId>cliche</artifactId>
         </dependency>
     </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
 
+    </build>
     <profiles>
-        <profile>
-            <id>run</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>exec-maven-plugin</artifactId>
-                        <configuration>
-                            <mainClass>org.knittingpatterndesigner.incubator.occlusion.Occlusion</mainClass>
-                            <arguments>
-                                <argument>-XstartOnFirstThread</argument>
-                                <argument>-classpath</argument>
-                            </arguments>
-                        </configuration>
-
-                        <executions>
-                            <execution>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>java</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-
-                </plugins>
-            </build>
-        </profile>
         <profile>
             <id>package</id>
             <build>
@@ -81,7 +66,8 @@
                             </descriptorRefs>
                             <archive>
                                 <manifest>
-                                    <mainClass>org.knittingpatterndesigner.incubator.occlusion.Occlusion</mainClass>
+                                    <mainClass>org.knittingpatterndesigner.incubator.occlusion.shell.OcclusionShell
+                                    </mainClass>
                                 </manifest>
                             </archive>
                         </configuration>
