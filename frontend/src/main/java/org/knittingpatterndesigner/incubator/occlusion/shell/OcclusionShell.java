@@ -1,6 +1,7 @@
 package org.knittingpatterndesigner.incubator.occlusion.shell;
 
 import asg.cliche.Command;
+import asg.cliche.Param;
 import asg.cliche.ShellFactory;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -30,7 +31,7 @@ public class OcclusionShell {
         ShellFactory.createConsoleShell("occlusion", "", new OcclusionShell(injector.getInstance(FileBackend.class), args[0])).commandLoop();
     }
 
-    @Command(name ="list-tasks", abbrev = "l")
+    @Command(name ="list-tasks", abbrev = "l",description = "This lists all tasks stored in your todo.txt.")
     public String listTasks() {
 
         StringBuffer result = new StringBuffer();
@@ -41,8 +42,8 @@ public class OcclusionShell {
         return result.toString();
     }
 
-    @Command(name = "list-tasks-by-context", abbrev = "lc")
-    public String listTasksByContext(String context) {
+    @Command(name = "list-tasks-by-context", abbrev = "lc",description = "This command lists all Tasks which belong to the given context.")
+    public String listTasksByContext(@Param(name = "Context",description = "The context you want to list the tasks for.")String context) {
 
         StringBuffer result = new StringBuffer();
 
