@@ -30,7 +30,7 @@ public class OcclusionShell {
         ShellFactory.createConsoleShell("occlusion", "", new OcclusionShell(injector.getInstance(FileBackend.class), args[0])).commandLoop();
     }
 
-    @Command
+    @Command(name ="list-tasks", abbrev = "l")
     public String listTasks() {
 
         StringBuffer result = new StringBuffer();
@@ -41,7 +41,7 @@ public class OcclusionShell {
         return result.toString();
     }
 
-    @Command(name = "list-task-by-context", abbrev = "lc")
+    @Command(name = "list-tasks-by-context", abbrev = "lc")
     public String listTasksByContext(String context) {
 
         StringBuffer result = new StringBuffer();

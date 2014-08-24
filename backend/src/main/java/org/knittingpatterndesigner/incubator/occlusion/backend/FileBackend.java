@@ -52,7 +52,6 @@ public class FileBackend implements Backend {
         List<String> result = new ArrayList<>();
         for (String task : this.taskLines) {
             if (task.contains(searchString)) {
-                System.out.println(task);
                 result.add(task);
             }
         }
