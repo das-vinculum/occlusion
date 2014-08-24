@@ -2,10 +2,13 @@ package org.knittingpatterndesigner.incubator.occlusion.shell;
 
 import asg.cliche.Command;
 import asg.cliche.ShellFactory;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import org.knittingpatterndesigner.incubator.occlusion.backend.Backend;
+import org.knittingpatterndesigner.incubator.occlusion.backend.BackendModule;
+import org.knittingpatterndesigner.incubator.occlusion.backend.FileBackend;
 
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
 
 
 /**
@@ -13,53 +16,41 @@ import java.util.List;
  */
 public class OcclusionShell {
 
-    private File taskFile;
-    private List<String> taskLines;
+    private Backend backend;
 
-    public OcclusionShell(String absolutePath) {
+    public OcclusionShell(Backend backend, String pathToTaskFile) {
 
-        this.taskFile = new File(absolutePath);
-
-        this.taskLines = new ArrayList<>();
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(taskFile))) {
-            String buffer = reader.readLine();
-            while (buffer != null) {
-                taskLines.add(buffer);
-                buffer = reader.readLine();
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("File could not be found. " + taskFile.getAbsolutePath());
-        } catch (IOException e) {
-            System.out.println("File could not be read. " + taskFile.getAbsolutePath());
-        }
-
-    }
-
-    @Command
-    public String helloWorld() {
-
-        return "Hello World!";
-    }
-
-    @Command
-    public int add(int a, int b) {
-        return a + b;
+        this.backend = backend;
+        this.backend.loadTaskFile(pathToTaskFile);
     }
 
     public static void main(String[] args) throws IOException {
 
-        ShellFactory.createConsoleShell("hello", "", new OcclusionShell(args[0])).commandLoop();
+        Injector injector = Guice.createInjector(new BackendModule());
+        ShellFactory.createConsoleShell("occlusion", "", new OcclusionShell(injector.getInstance(FileBackend.class), args[0])).commandLoop();
     }
 
     @Command
     public String listTasks() {
 
         StringBuffer result = new StringBuffer();
-        for (String line : this.taskLines) {
+        for (String line : this.backend.getTaskLines()) {
 
-            result.append(line);
+            result.append(line).append("\n");
         }
         return result.toString();
     }
+
+    @Command(name = "list-task-by-context", abbrev = "lc")
+    public String listTasksByContext(String context) {
+
+        StringBuffer result = new StringBuffer();
+
+        for (String line : this.backend.getTasksForContext(context)) {
+
+            result.append(line).append("\n");
+        }
+        return result.toString();
+    }
+
 }

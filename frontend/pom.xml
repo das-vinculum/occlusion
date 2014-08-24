@@ -22,13 +22,21 @@
 
     <dependencies>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
+            <groupId>org.jukito</groupId>
+            <artifactId>jukito</artifactId>
         </dependency>
         <dependency>
             <groupId>asg.cliche</groupId>
             <artifactId>cliche</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.knittingpatterndesigner.incubator.occlusion</groupId>
+            <artifactId>occlusion-backend</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
         </dependency>
     </dependencies>
     <build>

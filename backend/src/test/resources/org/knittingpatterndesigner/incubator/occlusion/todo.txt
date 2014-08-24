@@ -1,1 +1,2 @@
 @Vielleicht Software schreiben, welche Produkte mit Preisen verschiedener Händler verknüpft um eine +Preis_DB zu schaffen.
+@Niemals Software schreiben, welche Bugs enthält.

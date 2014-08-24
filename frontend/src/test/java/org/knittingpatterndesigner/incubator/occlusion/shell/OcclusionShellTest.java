@@ -3,37 +3,46 @@ package org.knittingpatterndesigner.incubator.occlusion.shell;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.knittingpatterndesigner.incubator.occlusion.backend.Backend;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
+import static org.mockito.Mockito.when;
+
+@RunWith(MockitoJUnitRunner.class)
 public class OcclusionShellTest {
 
-    private File taskTxt;
+    private OcclusionShell shell;
 
-    private String fileContent;
+    @Mock
+    private Backend backend;
 
     @Before
-    public void setUp() throws Exception {
-
-        URL url = getClass().getClassLoader().getResource("org/knittingpatterndesigner/incubator/occlusion/todo.txt");
-        this.taskTxt = new File(url.getFile());
-        FileReader reader = new FileReader(this.taskTxt);
-        BufferedReader bufferedReader = new BufferedReader(reader);
-        this.fileContent = bufferedReader.readLine();
-        bufferedReader.close();
-        reader.close();
+    public void setUp() {
+        shell = new OcclusionShell(backend, "any");
     }
 
     @Test
-    public void testListFile() {
+    public void testListTasks() {
+        List<String> taskList = new ArrayList<>();
+        taskList.add("task1");
+        when(backend.getTaskLines()).thenReturn(taskList);
+        Assert.assertEquals("listTasks did not return proper line", "task1\n", shell.listTasks());
+    }
 
-        OcclusionShell shell = new OcclusionShell(taskTxt.getAbsolutePath());
+    @Test
+    public void testListTasksByContext() {
+        List<String> taskList = new ArrayList<>();
+        taskList.add("@Context task1");
+        taskList.add("@Context task2");
+        when(backend.getTasksForContext("Context")).thenReturn(taskList);
+        String expected = "@Context task1\n@Context task2\n";
+        Assert.assertEquals("listTasks did not return proper line", expected, shell.listTasksByContext("Context"));
 
 
-        Assert.assertEquals("Wrong content", this.fileContent, shell.listTasks());
     }
 }
