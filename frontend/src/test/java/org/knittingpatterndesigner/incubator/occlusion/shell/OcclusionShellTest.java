@@ -16,14 +16,15 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class OcclusionShellTest {
 
-    private OcclusionShell shell;
+    private ListTasksCommands shell;
 
     @Mock
     private Backend backend;
 
     @Before
     public void setUp() {
-        shell = new OcclusionShell(backend, "any");
+        shell = new ListTasksCommands(backend);
+        shell.loadFile("any");
     }
 
     @Test
