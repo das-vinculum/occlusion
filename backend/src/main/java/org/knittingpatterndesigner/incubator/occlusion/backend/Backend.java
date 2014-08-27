@@ -10,7 +10,7 @@ import java.util.List;
 public interface Backend {
     void loadTaskFile(String pathToTaskFile);
 
-    List<String> getTaskLines();
+    List<Task> getTaskLines();
 
-    List<String> getTasksForContext(String context);
+    List<Task> getTasksForContext(String context);
 }

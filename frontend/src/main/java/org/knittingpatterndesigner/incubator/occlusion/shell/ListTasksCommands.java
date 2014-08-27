@@ -2,7 +2,9 @@ package org.knittingpatterndesigner.incubator.occlusion.shell;
 
 import asg.cliche.Command;
 import asg.cliche.Param;
+import com.google.inject.Inject;
 import org.knittingpatterndesigner.incubator.occlusion.backend.Backend;
+import org.knittingpatterndesigner.incubator.occlusion.backend.Task;
 
 import java.util.List;
 
@@ -15,6 +17,7 @@ public class ListTasksCommands {
 
     private Backend backend;
 
+    @Inject
     public ListTasksCommands(Backend backend) {
 
         this.backend = backend;
@@ -36,11 +39,11 @@ public class ListTasksCommands {
         return prepareListOfTasksForPrintingOnScreen(this.backend.getTasksForContext(context));
     }
 
-    private String prepareListOfTasksForPrintingOnScreen(List<String> taskLines) {
+    private String prepareListOfTasksForPrintingOnScreen(List<Task> taskLines) {
         StringBuffer result = new StringBuffer();
-        for (String line : taskLines) {
+        for (Task line : taskLines) {
 
-            result.append(line).append("\n");
+            result.append(line.getOriginalLine()).append("\n");
         }
         return result.toString();
     }

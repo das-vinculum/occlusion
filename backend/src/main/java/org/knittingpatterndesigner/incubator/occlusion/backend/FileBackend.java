@@ -13,7 +13,7 @@ import java.util.List;
 public class FileBackend implements Backend {
 
     private File taskFile;
-    private List<String> taskLines;
+    private List<Task> taskLines;
 
     @Override
     public void loadTaskFile(String pathToTaskFile) {
@@ -25,7 +25,7 @@ public class FileBackend implements Backend {
         try (BufferedReader reader = new BufferedReader(new FileReader(taskFile))) {
             String buffer = reader.readLine();
             while (buffer != null) {
-                taskLines.add(buffer);
+                taskLines.add(new Task(buffer));
                 buffer = reader.readLine();
             }
         } catch (FileNotFoundException e) {
@@ -36,12 +36,12 @@ public class FileBackend implements Backend {
     }
 
     @Override
-    public List<String> getTaskLines() {
+    public List<Task> getTaskLines() {
         return Collections.unmodifiableList(taskLines);
     }
 
     @Override
-    public List<String> getTasksForContext(String context) {
+    public List<Task> getTasksForContext(String context) {
 
         String searchString;
         if (context.startsWith("@")) {
@@ -49,9 +49,9 @@ public class FileBackend implements Backend {
         } else {
             searchString = "@" + context;
         }
-        List<String> result = new ArrayList<>();
-        for (String task : this.taskLines) {
-            if (task.contains(searchString)) {
+        List<Task> result = new ArrayList<>();
+        for (Task task : this.taskLines) {
+            if (task.isContext(searchString)) {
                 result.add(task);
             }
         }
