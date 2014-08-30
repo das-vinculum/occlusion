@@ -50,8 +50,15 @@ public class FileBackendTest {
 
     @Test
     public void testGetTasksForContext() {
+
         String expected = this.fileContent.get(1);
         Assert.assertEquals("Collected wrong line", expected, this.backend.getTasksForContext("Niemals").get(0).getOriginalLine());
+    }
 
+    @Test
+    public void testGetTaskForProject(){
+
+        String expected = this.fileContent.get(0);
+        Assert.assertEquals("Collected wrong line", expected, this.backend.getTasksForProject("Preis_DB").get(0).getOriginalLine());
     }
 }

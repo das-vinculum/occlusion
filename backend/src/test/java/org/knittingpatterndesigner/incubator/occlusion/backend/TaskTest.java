@@ -27,4 +27,16 @@ public class TaskTest {
         Task task = new Task("@Home just a test");
         assertFalse(task.isContext("@Work"));
     }
+
+    @Test
+    public void testMatchingProject(){
+        Task task = new Task("@Home this is just another project +project.");
+        assertTrue(task.isProject("+project"));
+    }
+
+    @Test
+    public void testNonMatchingProject(){
+        Task task = new Task("@Home this is just another project +another_project.");
+        assertFalse(task.isProject("+project"));
+    }
 }

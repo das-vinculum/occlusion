@@ -44,4 +44,14 @@ public class ListTaskCommandsTest {
         String expected = "@Context task1\n@Context task2\n";
         Assert.assertEquals("listTasks did not return proper line", expected, shell.listTasksByContext("Context"));
     }
+
+    @Test
+    public void testListTasksByProject(){
+        List<Task> taskList = new ArrayList<>();
+        taskList.add(new Task("@Context task1 +project"));
+        taskList.add(new Task("@Context task2 +project"));
+        when(backend.getTasksForProject("project")).thenReturn(taskList);
+        String expected = "@Context task1 +project\n@Context task2 +project\n";
+        Assert.assertEquals("listTasks did not return proper line", expected, shell.listTasksByProject("project"));
+    }
 }

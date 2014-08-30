@@ -36,7 +36,11 @@ public class FileBackend implements Backend {
 
     @Override
     public List<Task> getTaskLines() {
-        return Collections.unmodifiableList(taskLines);
+        return makeImmutable(taskLines);
+    }
+
+    private List<Task> makeImmutable(List<Task> tasks) {
+        return Collections.unmodifiableList(tasks);
     }
 
     @Override
@@ -54,6 +58,24 @@ public class FileBackend implements Backend {
                 result.add(task);
             }
         }
-        return result;
+        return makeImmutable(result);
+    }
+
+    @Override
+    public List<Task> getTasksForProject(String project) {
+
+        String searchString;
+        if (project.startsWith("+")) {
+            searchString = project;
+        } else {
+            searchString = "+" + project;
+        }
+        List<Task> result = new ArrayList<>();
+        for (Task task : this.taskLines) {
+            if (task.isProject(searchString)) {
+                result.add(task);
+            }
+        }
+        return makeImmutable(result);
     }
 }

@@ -28,4 +28,8 @@ public class Task {
     public String toString() {
         return getOriginalLine();
     }
+
+    public boolean isProject(String searchString) {
+        return originalLine.contains(searchString);
+    }
 }

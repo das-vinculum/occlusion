@@ -13,4 +13,6 @@ public interface Backend {
     List<Task> getTaskLines();
 
     List<Task> getTasksForContext(String context);
+
+    List<Task> getTasksForProject(String preis_db);
 }

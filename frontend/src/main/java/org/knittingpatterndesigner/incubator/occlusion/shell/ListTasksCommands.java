@@ -48,4 +48,9 @@ public class ListTasksCommands {
         return result.toString();
     }
 
+
+    public String listTasksByProject(String project) {
+
+        return prepareListOfTasksForPrintingOnScreen(this.backend.getTasksForProject(project));
+    }
 }
