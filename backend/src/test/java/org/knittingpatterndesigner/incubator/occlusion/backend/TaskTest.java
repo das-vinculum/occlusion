@@ -16,27 +16,51 @@ public class TaskTest {
     }
 
     @Test
-    public void testMatchingContext(){
+    public void testMatchingContextWithPrefix(){
 
         Task task = new Task("@Home just a test");
         assertTrue(task.isContext("@Home"));
     }
 
     @Test
-    public void testNonMatchingContext(){
+    public void testMatchingContextWithoutPrefix(){
+
         Task task = new Task("@Home just a test");
+        assertTrue(task.isContext("Home"));
+    }
+
+    @Test
+    public void testNonMatchingContextWithPrefix(){
+        Task task = new Task("@Home Work is just a test");
         assertFalse(task.isContext("@Work"));
     }
 
     @Test
-    public void testMatchingProject(){
+    public void testNonMatchingContextWithoutPrefix(){
+        Task task = new Task("@Home Work is just a test");
+        assertFalse(task.isContext("Work"));
+    }
+
+    @Test
+    public void testMatchingProjectWithPrefix(){
         Task task = new Task("@Home this is just another project +project.");
         assertTrue(task.isProject("+project"));
     }
 
     @Test
-    public void testNonMatchingProject(){
+    public void testMatchingProjectWithoutPrefix(){
+        Task task = new Task("@Home this is just another project +project.");
+        assertTrue(task.isProject("project"));
+    }
+
+    @Test
+    public void testNonMatchingProjectWithPrefix(){
         Task task = new Task("@Home this is just another project +another_project.");
         assertFalse(task.isProject("+project"));
+    }
+    @Test
+    public void testNonMatchingProjectWithoutPrefix(){
+        Task task = new Task("@Home this is just another project +another_project.");
+        assertFalse(task.isProject("project"));
     }
 }

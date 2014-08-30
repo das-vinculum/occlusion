@@ -46,15 +46,9 @@ public class FileBackend implements Backend {
     @Override
     public List<Task> getTasksForContext(String context) {
 
-        String searchString;
-        if (context.startsWith("@")) {
-            searchString = context;
-        } else {
-            searchString = "@" + context;
-        }
         List<Task> result = new ArrayList<>();
         for (Task task : this.taskLines) {
-            if (task.isContext(searchString)) {
+            if (task.isContext(context)) {
                 result.add(task);
             }
         }
@@ -64,15 +58,9 @@ public class FileBackend implements Backend {
     @Override
     public List<Task> getTasksForProject(String project) {
 
-        String searchString;
-        if (project.startsWith("+")) {
-            searchString = project;
-        } else {
-            searchString = "+" + project;
-        }
         List<Task> result = new ArrayList<>();
         for (Task task : this.taskLines) {
-            if (task.isProject(searchString)) {
+            if (task.isProject(project)) {
                 result.add(task);
             }
         }

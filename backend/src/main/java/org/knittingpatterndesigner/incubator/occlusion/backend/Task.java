@@ -21,7 +21,11 @@ public class Task {
     }
 
     public boolean isContext(String s) {
-        return originalLine.contains(s);
+        if (s.startsWith("@")) {
+            return originalLine.contains(s);
+        } else {
+            return originalLine.contains("@" + s);
+        }
     }
 
     @Override
@@ -30,6 +34,12 @@ public class Task {
     }
 
     public boolean isProject(String searchString) {
-        return originalLine.contains(searchString);
+        if (searchString.startsWith("+")) {
+
+            return originalLine.contains(searchString);
+        } else {
+
+            return originalLine.contains("+" + searchString);
+        }
     }
 }

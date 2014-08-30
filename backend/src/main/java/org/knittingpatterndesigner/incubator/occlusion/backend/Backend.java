@@ -8,6 +8,7 @@ import java.util.List;
  * Created: 24.08.14
  */
 public interface Backend {
+
     void loadTaskFile(String pathToTaskFile);
 
     List<Task> getTaskLines();
