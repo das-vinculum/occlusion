@@ -19,7 +19,6 @@ public class FileBackend implements Backend {
     public void loadTaskFile(String pathToTaskFile) {
 
         this.taskFile = new File(pathToTaskFile);
-
         this.taskLines = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(taskFile))) {

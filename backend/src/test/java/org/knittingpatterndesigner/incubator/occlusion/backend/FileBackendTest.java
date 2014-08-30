@@ -28,7 +28,7 @@ public class FileBackendTest {
         FileReader reader = new FileReader(this.taskTxt);
         BufferedReader bufferedReader = new BufferedReader(reader);
         String buffer = bufferedReader.readLine();
-        while(buffer != null){
+        while (buffer != null) {
 
             this.fileContent.add(buffer);
             buffer = bufferedReader.readLine();
@@ -41,13 +41,17 @@ public class FileBackendTest {
     @Test
     public void testListFile() {
 
-        Assert.assertEquals("Wrong content", this.fileContent, backend.getTaskLines());
+        Assert.assertEquals("Wrong line count", this.fileContent.size(), backend.getTaskLines().size());
+        for (int i = 0; i < this.fileContent.size(); i++) {
+            Assert.assertEquals("Wrong content", this.fileContent.get(i), backend.getTaskLines().get(i).getOriginalLine());
+
+        }
     }
 
     @Test
-    public void testGetTasksForContext(){
+    public void testGetTasksForContext() {
         String expected = this.fileContent.get(1);
-        Assert.assertEquals("Collected wrong line",expected, this.backend.getTasksForContext("Niemals").get(0));
+        Assert.assertEquals("Collected wrong line", expected, this.backend.getTasksForContext("Niemals").get(0).getOriginalLine());
 
     }
 }
