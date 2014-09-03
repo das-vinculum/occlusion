@@ -7,11 +7,13 @@ import org.junit.runner.RunWith;
 import org.knittingpatterndesigner.incubator.occlusion.backend.Backend;
 import org.knittingpatterndesigner.incubator.occlusion.backend.Task;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -53,5 +55,16 @@ public class ListTaskCommandsTest {
         when(backend.getTasksForProject("project")).thenReturn(taskList);
         String expected = "@Context task1 +project\n@Context task2 +project\n";
         Assert.assertEquals("listTasks did not return proper line", expected, shell.listTasksByProject("project"));
+    }
+
+    @Test
+    public void addTask(){
+
+        Task expectedTask = new Task("Das ist ein neuer Task für @Hause aus dem +Projekt");
+
+        shell.add("Das","ist", "ein", "neuer" ,"Task","für","@Hause", "aus", "dem","+Projekt");
+        verify(backend).addTask(expectedTask);
+
+
     }
 }

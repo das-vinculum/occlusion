@@ -9,11 +9,13 @@ import java.util.List;
  */
 public interface Backend {
 
-    void loadTaskFile(String pathToTaskFile);
+    void loadTasks(String pathToTaskFile);
 
     List<Task> getTaskLines();
 
     List<Task> getTasksForContext(String context);
 
     List<Task> getTasksForProject(String preis_db);
+
+    void addTask(Task expectedTask);
 }

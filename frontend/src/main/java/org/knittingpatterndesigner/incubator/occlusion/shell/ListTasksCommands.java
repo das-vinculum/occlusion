@@ -10,7 +10,6 @@ import java.util.List;
 
 
 /**
- *
  * Main starting point for the shell interface
  */
 public class ListTasksCommands {
@@ -23,8 +22,8 @@ public class ListTasksCommands {
         this.backend = backend;
     }
 
-    public void loadFile(String filename){
-        this.backend.loadTaskFile(filename);
+    public void loadFile(String filename) {
+        this.backend.loadTasks(filename);
     }
 
     @Command(name = "list-tasks", abbrev = "l", description = "This lists all tasks stored in your todo.txt.")
@@ -52,5 +51,20 @@ public class ListTasksCommands {
     public String listTasksByProject(String project) {
 
         return prepareListOfTasksForPrintingOnScreen(this.backend.getTasksForProject(project));
+    }
+
+    public void add(String... task) {
+
+        StringBuilder builder = new StringBuilder();
+        int i = 0;
+        for (String word : task) {
+            if (i > 0) {
+                builder.append(" ");
+            }
+            i++;
+            builder.append(word);
+        }
+        Task taskObject = new Task(builder.toString());
+        backend.addTask(taskObject);
     }
 }

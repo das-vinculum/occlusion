@@ -11,17 +11,18 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileBackendTest {
+
+public class FileStorageTest {
 
     private File taskTxt;
 
     private List<String> fileContent;
-    private Backend backend;
+    private FileStorage backend;
 
     @Before
     public void setUp() throws Exception {
 
-        backend = new FileBackend();
+        backend = new FileStorage();
         this.fileContent = new ArrayList<>();
         URL url = getClass().getClassLoader().getResource("org/knittingpatterndesigner/incubator/occlusion/todo.txt");
         this.taskTxt = new File(url.getFile());
@@ -35,30 +36,16 @@ public class FileBackendTest {
         }
         bufferedReader.close();
         reader.close();
-        backend.loadTaskFile(taskTxt.getAbsolutePath());
+        backend.loadTasks(taskTxt.getAbsolutePath());
     }
 
     @Test
-    public void testListFile() {
+    public void testLoadTasks() throws Exception {
 
-        Assert.assertEquals("Wrong line count", this.fileContent.size(), backend.getTaskLines().size());
-        for (int i = 0; i < this.fileContent.size(); i++) {
-            Assert.assertEquals("Wrong content", this.fileContent.get(i), backend.getTaskLines().get(i).getOriginalLine());
-
+        List<Task> tasks = this.backend.loadTasks(taskTxt.getAbsolutePath());
+        Assert.assertEquals("Wrong number of loaded lines",this.fileContent.size(),tasks.size());
+        for (int i = 0; i < this.fileContent.size(); i++){
+             Assert.assertEquals("Wrong content loaded",this.fileContent.get(i),tasks.get(i).getOriginalLine());
         }
-    }
-
-    @Test
-    public void testGetTasksForContext() {
-
-        String expected = this.fileContent.get(1);
-        Assert.assertEquals("Collected wrong line", expected, this.backend.getTasksForContext("Niemals").get(0).getOriginalLine());
-    }
-
-    @Test
-    public void testGetTaskForProject(){
-
-        String expected = this.fileContent.get(0);
-        Assert.assertEquals("Collected wrong line", expected, this.backend.getTasksForProject("Preis_DB").get(0).getOriginalLine());
     }
 }

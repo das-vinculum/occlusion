@@ -42,4 +42,21 @@ public class Task {
             return originalLine.contains("+" + searchString);
         }
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Task task = (Task) o;
+
+        if (!originalLine.equals(task.originalLine)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return originalLine.hashCode();
+    }
 }

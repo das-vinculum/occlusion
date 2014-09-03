@@ -4,7 +4,7 @@ import asg.cliche.ShellFactory;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import org.knittingpatterndesigner.incubator.occlusion.backend.BackendModule;
-import org.knittingpatterndesigner.incubator.occlusion.backend.FileBackend;
+import org.knittingpatterndesigner.incubator.occlusion.backend.TaskBackend;
 
 import java.io.IOException;
 
@@ -17,7 +17,7 @@ public class OcclusionShellStarter {
 
         Injector injector = Guice.createInjector(new BackendModule(), new ShellFrontendModule());
         injector.getInstance(ListTasksCommands.class).loadFile(args[0]);
-        ShellFactory.createConsoleShell("occlusion", "", new ListTasksCommands(injector.getInstance(FileBackend.class))).commandLoop();
+        ShellFactory.createConsoleShell("occlusion", "", new ListTasksCommands(injector.getInstance(TaskBackend.class))).commandLoop();
     }
 
 

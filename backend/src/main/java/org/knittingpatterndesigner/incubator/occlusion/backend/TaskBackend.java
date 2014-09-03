@@ -1,5 +1,7 @@
 package org.knittingpatterndesigner.incubator.occlusion.backend;
 
+import com.google.inject.Inject;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,28 +12,22 @@ import java.util.List;
  * Created by: florianzeidler
  * Created: 23.08.14
  */
-public class FileBackend implements Backend {
+public class TaskBackend implements Backend {
 
-    private File taskFile;
+
     private List<Task> taskLines;
 
+    private Storage storage;
+
+    @Inject
+    public TaskBackend(Storage storage){
+           this.storage = storage;
+    }
+
+
     @Override
-    public void loadTaskFile(String pathToTaskFile) {
-
-        this.taskFile = new File(pathToTaskFile);
-        this.taskLines = new ArrayList<>();
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(taskFile))) {
-            String buffer = reader.readLine();
-            while (buffer != null) {
-                taskLines.add(new Task(buffer));
-                buffer = reader.readLine();
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("File could not be found. " + taskFile.getAbsolutePath());
-        } catch (IOException e) {
-            System.out.println("File could not be read. " + taskFile.getAbsolutePath());
-        }
+    public void loadTasks(String pathToTaskFile) {
+        this.taskLines = this.storage.loadTasks(pathToTaskFile);
     }
 
     @Override
@@ -65,5 +61,11 @@ public class FileBackend implements Backend {
             }
         }
         return makeImmutable(result);
+    }
+
+    @Override
+    public void addTask(Task task) {
+
+
     }
 }

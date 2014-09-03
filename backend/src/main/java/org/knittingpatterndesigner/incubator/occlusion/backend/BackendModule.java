@@ -10,6 +10,7 @@ import com.google.inject.AbstractModule;
 public class BackendModule extends AbstractModule {
     @Override
     protected void configure() {
-        bind(Backend.class).to(FileBackend.class);
+        bind(Storage.class).to(FileStorage.class);
+        bind(Backend.class).to(TaskBackend.class);
     }
 }
