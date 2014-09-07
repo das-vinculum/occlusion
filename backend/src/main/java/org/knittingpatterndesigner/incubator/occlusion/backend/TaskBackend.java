@@ -68,6 +68,7 @@ public class TaskBackend implements Backend {
     @Override
     public void addTask(Task task) {
 
-
+        this.taskLines.add(task);
+        this.storage.storeTasks(taskLines);
     }
 }

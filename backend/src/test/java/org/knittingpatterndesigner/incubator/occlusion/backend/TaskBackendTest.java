@@ -4,13 +4,14 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static junit.framework.TestCase.fail;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -24,13 +25,14 @@ public class TaskBackendTest {
     private Storage storage;
 
     @Test
-    public void testListEmptyFile(){
+    public void testListEmptyFile() {
 
         List<Task> tasks = new ArrayList<>();
         when(storage.loadTasks("testpath")).thenReturn(tasks);
         backend.loadTasks("testpath");
         Assert.assertEquals("Wrong line count", tasks.size(), backend.getTaskLines().size());
     }
+
     @Test
     public void testListFile() {
         List<Task> tasks = new ArrayList<>();
@@ -69,9 +71,20 @@ public class TaskBackendTest {
         Assert.assertEquals("Collected wrong line", expected, this.backend.getTasksForProject("Preis_DB").get(0).getOriginalLine());
     }
 
-    // @Test
+    @Test
     public void testAddNewTask() {
-
-        fail();
+        List<Task> tasks = new ArrayList<>();
+        tasks.add(new Task("@Context task1 +project"));
+        tasks.add(new Task("@Niemals task2 +Preis_DB"));
+        when(storage.loadTasks("testpath")).thenReturn(tasks);
+        backend.loadTasks("testpath");
+        backend.addTask(new Task("@Neu task +projectNew"));
+        verify(storage).storeTasks(Matchers.anyListOf(Task.class));
+        List<Task> retrievedTasks = backend.getTaskLines();
+        tasks.add(new Task("@Neu task +projectNew"));
+        Assert.assertEquals("Not all retrieved", tasks.size(), retrievedTasks.size());
+        for (int i = 0; i < retrievedTasks.size(); i++) {
+            Assert.assertEquals(tasks.get(i), retrievedTasks.get(i));
+        }
     }
 }

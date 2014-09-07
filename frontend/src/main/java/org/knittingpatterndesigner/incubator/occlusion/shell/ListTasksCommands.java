@@ -47,12 +47,13 @@ public class ListTasksCommands {
         return result.toString();
     }
 
-
+@Command(name="list-tasks-by-project",abbrev = "lp",description = "This command lists all tasks matching the given project.")
     public String listTasksByProject(String project) {
 
         return prepareListOfTasksForPrintingOnScreen(this.backend.getTasksForProject(project));
     }
 
+    @Command(name="add-task",abbrev = "a", description = "This command adds a new task to the file.")
     public void add(String... task) {
 
         StringBuilder builder = new StringBuilder();
