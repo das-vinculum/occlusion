@@ -27,7 +27,9 @@ public class TaskBackend implements Backend {
 
     @Override
     public void loadTasks(String pathToTaskFile) {
+        System.out.println("TaskBackend.loadTasks("+pathToTaskFile+")");
         this.taskLines = this.storage.loadTasks(pathToTaskFile);
+        System.out.println("Loaded number of tasks: "+this.taskLines.size());
     }
 
     @Override

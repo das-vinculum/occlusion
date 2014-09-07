@@ -43,6 +43,15 @@ public class FileStorageTest {
     }
 
     @Test
+    public void testLoadEmptyFile(){
+
+        URL url = getClass().getClassLoader().getResource("org/knittingpatterndesigner/incubator/occlusion/empty.txt");
+        File workfile = new File(url.getFile());
+        List<Task> tasks = this.backend.loadTasks(workfile.getAbsolutePath());
+        Assert.assertNotNull(tasks);
+    }
+
+    @Test
     public void testLoadTasks() throws Exception {
 
         List<Task> tasks = this.backend.loadTasks(taskTxt.getAbsolutePath());

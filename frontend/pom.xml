@@ -78,8 +78,7 @@
                             </descriptorRefs>
                             <archive>
                                 <manifest>
-                                    <mainClass>org.knittingpatterndesigner.incubator.occlusion.shell.OcclusionShellStarter:w
-                                    </mainClass>
+                                    <mainClass>org.knittingpatterndesigner.incubator.occlusion.shell.OcclusionShellStarter</mainClass>
                                 </manifest>
                             </archive>
                         </configuration>

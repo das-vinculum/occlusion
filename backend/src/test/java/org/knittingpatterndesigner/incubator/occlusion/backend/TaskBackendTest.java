@@ -24,6 +24,14 @@ public class TaskBackendTest {
     private Storage storage;
 
     @Test
+    public void testListEmptyFile(){
+
+        List<Task> tasks = new ArrayList<>();
+        when(storage.loadTasks("testpath")).thenReturn(tasks);
+        backend.loadTasks("testpath");
+        Assert.assertEquals("Wrong line count", tasks.size(), backend.getTaskLines().size());
+    }
+    @Test
     public void testListFile() {
         List<Task> tasks = new ArrayList<>();
         tasks.add(new Task("@Context task1 +project"));

@@ -5,9 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
- * Created by: florianzeidler
- * Created: 03.09.14
+ *
  */
 public class FileStorage implements Storage {
 

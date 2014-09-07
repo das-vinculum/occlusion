@@ -29,6 +29,13 @@ public class ListTaskCommandsTest {
         shell = new ListTasksCommands(backend);
     }
 
+
+    @Test
+    public void testListTasksWithEmptyList(){
+
+        List<Task> taskList = new ArrayList<>();
+        when(backend.getTaskLines()).thenReturn(taskList);
+    }
     @Test
     public void testListTasks() {
         List<Task> taskList = new ArrayList<>();

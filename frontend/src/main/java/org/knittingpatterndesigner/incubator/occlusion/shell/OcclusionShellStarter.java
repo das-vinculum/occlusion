@@ -15,9 +15,10 @@ public class OcclusionShellStarter {
 
     public static void main(String[] args) throws IOException {
 
-        Injector injector = Guice.createInjector(new BackendModule(), new ShellFrontendModule());
-        injector.getInstance(ListTasksCommands.class).loadFile(args[0]);
-        ShellFactory.createConsoleShell("occlusion", "", new ListTasksCommands(injector.getInstance(TaskBackend.class))).commandLoop();
+        Injector injector = Guice.createInjector(new ShellFrontendModule());
+        ListTasksCommands commands = injector.getInstance(ListTasksCommands.class);
+        commands.loadFile(args[0]);
+        ShellFactory.createConsoleShell("occlusion", "", commands).commandLoop();
     }
 
 
