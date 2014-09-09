@@ -10,6 +10,7 @@ import java.util.List;
 public class FileStorage implements Storage {
 
     private String pathToTaskFile;
+
     @Override
     public List<Task> loadTasks(String pathToTaskFile) {
 
@@ -33,10 +34,10 @@ public class FileStorage implements Storage {
     @Override
     public void storeTasks(List<Task> tasks) {
 
-        try(BufferedWriter writer = new BufferedWriter(new FileWriter(pathToTaskFile))){
-            for (int i = 0; i < tasks.size(); i++){
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(pathToTaskFile))) {
+            for (int i = 0; i < tasks.size(); i++) {
                 writer.write(tasks.get(i).getOriginalLine());
-                if (i < tasks.size()-1){
+                if (i < tasks.size() - 1) {
                     writer.newLine();
                 }
             }

@@ -2,7 +2,6 @@ package org.knittingpatterndesigner.incubator.occlusion.backend;
 
 import com.google.inject.Inject;
 
-import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -20,16 +19,16 @@ public class TaskBackend implements Backend {
     private Storage storage;
 
     @Inject
-    public TaskBackend(Storage storage){
-           this.storage = storage;
+    public TaskBackend(Storage storage) {
+        this.storage = storage;
     }
 
 
     @Override
     public void loadTasks(String pathToTaskFile) {
-        System.out.println("TaskBackend.loadTasks("+pathToTaskFile+")");
+        System.out.println("TaskBackend.loadTasks(" + pathToTaskFile + ")");
         this.taskLines = this.storage.loadTasks(pathToTaskFile);
-        System.out.println("Loaded number of tasks: "+this.taskLines.size());
+        System.out.println("Loaded number of tasks: " + this.taskLines.size());
     }
 
     @Override

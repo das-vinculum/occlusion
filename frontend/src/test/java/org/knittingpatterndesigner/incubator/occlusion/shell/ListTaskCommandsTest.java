@@ -7,7 +7,6 @@ import org.junit.runner.RunWith;
 import org.knittingpatterndesigner.incubator.occlusion.backend.Backend;
 import org.knittingpatterndesigner.incubator.occlusion.backend.Task;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
@@ -31,11 +30,12 @@ public class ListTaskCommandsTest {
 
 
     @Test
-    public void testListTasksWithEmptyList(){
+    public void testListTasksWithEmptyList() {
 
         List<Task> taskList = new ArrayList<>();
         when(backend.getTaskLines()).thenReturn(taskList);
     }
+
     @Test
     public void testListTasks() {
         List<Task> taskList = new ArrayList<>();
@@ -55,7 +55,7 @@ public class ListTaskCommandsTest {
     }
 
     @Test
-    public void testListTasksByProject(){
+    public void testListTasksByProject() {
         List<Task> taskList = new ArrayList<>();
         taskList.add(new Task("@Context task1 +project"));
         taskList.add(new Task("@Context task2 +project"));
@@ -65,11 +65,11 @@ public class ListTaskCommandsTest {
     }
 
     @Test
-    public void addTask(){
+    public void addTask() {
 
         Task expectedTask = new Task("Das ist ein neuer Task für @Hause aus dem +Projekt");
 
-        shell.add("Das","ist", "ein", "neuer" ,"Task","für","@Hause", "aus", "dem","+Projekt");
+        shell.add("Das", "ist", "ein", "neuer", "Task", "für", "@Hause", "aus", "dem", "+Projekt");
         verify(backend).addTask(expectedTask);
 
 

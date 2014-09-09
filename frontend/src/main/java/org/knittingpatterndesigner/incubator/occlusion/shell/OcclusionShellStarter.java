@@ -3,8 +3,6 @@ package org.knittingpatterndesigner.incubator.occlusion.shell;
 import asg.cliche.ShellFactory;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import org.knittingpatterndesigner.incubator.occlusion.backend.BackendModule;
-import org.knittingpatterndesigner.incubator.occlusion.backend.TaskBackend;
 
 import java.io.IOException;
 
