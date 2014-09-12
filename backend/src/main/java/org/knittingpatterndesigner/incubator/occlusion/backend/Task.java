@@ -1,46 +1,67 @@
 package org.knittingpatterndesigner.incubator.occlusion.backend;
 
 /**
- * Created with IntelliJ IDEA.
- * Created by: florianzeidler
- * Created: 26.08.14
+ * This class represents a task.
  */
 public class Task {
 
-    private String context;
-
+    /**
+     * This is the line as read from the file.
+     */
     private String originalLine;
 
+    /**
+     * Initalize the class and setting the given string as original line.
+     *
+     * @param taskString The line as read from the file.
+     */
     public Task(String taskString) {
         this.originalLine = taskString;
 
     }
 
+    /**
+     * This returns the original line stored.
+     *
+     * @return the original line stored
+     */
     public String getOriginalLine() {
         return originalLine;
     }
 
-    public boolean isContext(String s) {
-        if (s.startsWith("@")) {
-            return originalLine.contains(s);
+    /**
+     * This returns, if the current tasks has the given context.
+     *
+     * @param context The context for which the task is checked
+     * @return true when it matches the project
+     */
+    public boolean isContext(String context) {
+        if (context.startsWith("@")) {
+            return originalLine.contains(context);
         } else {
-            return originalLine.contains("@" + s);
+            return originalLine.contains("@" + context);
+        }
+    }
+
+    /**
+     * This returns, if this task belongs to the given Project.
+     *
+     * @param project The project for which the task is checked.
+     * @return true when it matches the project
+     */
+    public boolean isProject(String project) {
+        if (project.startsWith("+")) {
+
+            return originalLine.contains(project);
+        } else {
+
+            return originalLine.contains("+" + project);
         }
     }
 
     @Override
     public String toString() {
         return getOriginalLine();
-    }
-
-    public boolean isProject(String searchString) {
-        if (searchString.startsWith("+")) {
-
-            return originalLine.contains(searchString);
-        } else {
-
-            return originalLine.contains("+" + searchString);
-        }
     }
 
     @Override

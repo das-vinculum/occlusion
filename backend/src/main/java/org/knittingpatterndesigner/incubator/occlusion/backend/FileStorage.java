@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * This is a simple store using one file in the file system.
  */
 public class FileStorage implements Storage {
 
