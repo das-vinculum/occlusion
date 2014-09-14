@@ -12,6 +12,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -20,12 +21,12 @@ public class FileStorageTest {
     private File taskTxt;
 
     private List<String> fileContent;
-    private FileStorage backend;
+    private FileStorage fileStorage;
 
     @Before
     public void setUp() throws Exception {
 
-        backend = new FileStorage();
+        fileStorage = new FileStorage();
         this.fileContent = new ArrayList<>();
         URL url = getClass().getClassLoader().getResource("org/knittingpatterndesigner/incubator/occlusion/todo.txt");
         this.taskTxt = new File(url.getFile());
@@ -39,25 +40,41 @@ public class FileStorageTest {
         }
         bufferedReader.close();
         reader.close();
-        backend.loadTasks(taskTxt.getAbsolutePath());
+        fileStorage.loadTasks(taskTxt.getAbsolutePath());
     }
 
     @Test
-    public void testLoadEmptyFile(){
+    public void testListTodoFiles() {
+        URL url = getClass().getClassLoader().getResource("org/knittingpatterndesigner/incubator/occlusion/fetchTaskFiles");
+        File folder = new File(url.getFile());
+
+        List<File> taskFiles = this.fileStorage.getTaskFiles(folder);
+        List<File> founded = Arrays.asList(folder.listFiles(new TaskFileNameFilter()));
+        Assert.assertEquals("Fetched too much files.", founded.size(), taskFiles.size());
+        for (File taskFile : founded) {
+            if (taskFile.getName().matches(".*\\.txt")) {
+
+                Assert.assertTrue(taskFiles.contains(taskFile));
+            }
+        }
+    }
+
+    @Test
+    public void testLoadEmptyFile() {
 
         URL url = getClass().getClassLoader().getResource("org/knittingpatterndesigner/incubator/occlusion/empty.txt");
         File workfile = new File(url.getFile());
-        List<Task> tasks = this.backend.loadTasks(workfile.getAbsolutePath());
+        List<Task> tasks = this.fileStorage.loadTasks(workfile.getAbsolutePath());
         Assert.assertNotNull(tasks);
     }
 
     @Test
     public void testLoadTasks() throws Exception {
 
-        List<Task> tasks = this.backend.loadTasks(taskTxt.getAbsolutePath());
-        Assert.assertEquals("Wrong number of loaded lines",this.fileContent.size(),tasks.size());
-        for (int i = 0; i < this.fileContent.size(); i++){
-             Assert.assertEquals("Wrong content loaded",this.fileContent.get(i),tasks.get(i).getOriginalLine());
+        List<Task> tasks = this.fileStorage.loadTasks(taskTxt.getAbsolutePath());
+        Assert.assertEquals("Wrong number of loaded lines", this.fileContent.size(), tasks.size());
+        for (int i = 0; i < this.fileContent.size(); i++) {
+            Assert.assertEquals("Wrong content loaded", this.fileContent.get(i), tasks.get(i).getOriginalLine());
         }
     }
 
@@ -68,15 +85,15 @@ public class FileStorageTest {
         File workfile = new File(url.getFile());
         Files.copy(this.taskTxt.toPath(), workfile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
-        List<Task> tasks = this.backend.loadTasks(workfile.getAbsolutePath());
+        List<Task> tasks = this.fileStorage.loadTasks(workfile.getAbsolutePath());
         tasks.add(new Task("Another task"));
 
-        this.backend.storeTasks(tasks);
-        List<Task> reloadedTasks = this.backend.loadTasks(workfile.getAbsolutePath());
-        Assert.assertEquals("Tasks was not stored",tasks.size(), reloadedTasks.size());
+        this.fileStorage.storeTasks(tasks);
+        List<Task> reloadedTasks = this.fileStorage.loadTasks(workfile.getAbsolutePath());
+        Assert.assertEquals("Tasks was not stored", tasks.size(), reloadedTasks.size());
 
-        for (int i = 0; i < tasks.size(); i++){
-            Assert.assertEquals("Wrong content loaded",tasks.get(i),reloadedTasks.get(i));
+        for (int i = 0; i < tasks.size(); i++) {
+            Assert.assertEquals("Wrong content loaded", tasks.get(i), reloadedTasks.get(i));
         }
 
     }

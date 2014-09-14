@@ -46,4 +46,16 @@ public class FileStorage implements Storage {
         }
     }
 
+    @Override
+    public List<File> getTaskFiles(File folder) {
+        List<File> result = new ArrayList<>();
+        if (folder.isDirectory()) {
+            File[] files = folder.listFiles(new TaskFileNameFilter());
+            for (File f : files) {
+                result.add(f);
+            }
+        }
+        return result;
+    }
+
 }

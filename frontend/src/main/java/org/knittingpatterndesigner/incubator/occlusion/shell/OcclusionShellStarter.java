@@ -15,7 +15,7 @@ public class OcclusionShellStarter {
 
         Injector injector = Guice.createInjector(new ShellFrontendModule());
         ListTasksCommands commands = injector.getInstance(ListTasksCommands.class);
-        commands.loadFile(args[0]);
+        commands.loadFiles(args[0]);
         ShellFactory.createConsoleShell("occlusion", "", commands).commandLoop();
     }
 

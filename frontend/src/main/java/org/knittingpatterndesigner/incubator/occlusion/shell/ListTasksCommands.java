@@ -22,8 +22,8 @@ public class ListTasksCommands {
         this.backend = backend;
     }
 
-    public void loadFile(String filename) {
-        this.backend.loadTasks(filename);
+    public void loadFiles(String folder) {
+        this.backend.loadTasks(folder);
     }
 
     @Command(name = "list-tasks", abbrev = "l", description = "This lists all tasks stored in your todo.txt.")

@@ -1,5 +1,6 @@
 package org.knittingpatterndesigner.incubator.occlusion.backend;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -20,4 +21,6 @@ public interface Storage {
      * @param tasks The list containing the tasks.
      */
     void storeTasks(List<Task> tasks);
+
+    List<File> getTaskFiles(File folder);
 }

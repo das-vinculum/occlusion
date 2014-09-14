@@ -10,9 +10,9 @@ public interface Backend {
     /**
      * This function loads the files from the filesystem.
      *
-     * @param pathToTaskFile The place of the file.
+     * @param pathToTaskFolder The place of the file.
      */
-    void loadTasks(String pathToTaskFile);
+    void loadTasks(String pathToTaskFolder);
 
     /**
      * This returns the tasks
