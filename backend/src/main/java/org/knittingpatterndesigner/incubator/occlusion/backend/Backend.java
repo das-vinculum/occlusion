@@ -7,12 +7,11 @@ import java.util.List;
  */
 public interface Backend {
 
+    void setTaskFolder(String taskFolder);
     /**
      * This function loads the files from the filesystem.
-     *
-     * @param pathToTaskFolder The place of the file.
      */
-    void loadTasks(String pathToTaskFolder);
+    void loadTasks();
 
     /**
      * This returns the tasks
@@ -43,4 +42,11 @@ public interface Backend {
      * @param task The task which should be added.
      */
     void addTask(Task task);
+
+    /**
+     * This returns a list of contexts stored.
+     *
+     * @return An immutable list of contexts.
+     */
+    List<Task> getContexts();
 }

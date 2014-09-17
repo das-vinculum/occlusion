@@ -2,6 +2,7 @@ package org.knittingpatterndesigner.incubator.occlusion.backend;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -9,32 +10,29 @@ import java.util.List;
  */
 public class FileStorage implements Storage {
 
-    private String pathToTaskFile;
 
     @Override
-    public List<Task> loadTasks(String pathToTaskFile) {
+    public List<Task> loadTasks(String pathToFile) {
 
-        this.pathToTaskFile = pathToTaskFile;
         List<Task> taskLines = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(pathToTaskFile))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(pathToFile))) {
             String buffer = reader.readLine();
             while (buffer != null) {
                 taskLines.add(new Task(buffer));
                 buffer = reader.readLine();
             }
         } catch (FileNotFoundException e) {
-            System.out.println("File could not be found. " + pathToTaskFile);
+            System.out.println("File could not be found. " + pathToFile);
         } catch (IOException e) {
-            System.out.println("File could not be read. " + pathToTaskFile);
+            System.out.println("File could not be read. " + pathToFile);
         }
-
         return taskLines;
     }
 
     @Override
-    public void storeTasks(List<Task> tasks) {
+    public void storeTasksToFile(List<Task> tasks,String pathToFile) {
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(pathToTaskFile))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(pathToFile))) {
             for (int i = 0; i < tasks.size(); i++) {
                 writer.write(tasks.get(i).getOriginalLine());
                 if (i < tasks.size() - 1) {
@@ -50,10 +48,7 @@ public class FileStorage implements Storage {
     public List<File> getTaskFiles(File folder) {
         List<File> result = new ArrayList<>();
         if (folder.isDirectory()) {
-            File[] files = folder.listFiles(new TaskFileNameFilter());
-            for (File f : files) {
-                result.add(f);
-            }
+            result.addAll(Arrays.asList(folder.listFiles(new TaskFileNameFilter())));
         }
         return result;
     }

@@ -28,10 +28,8 @@ public class ListTaskCommandsTest {
         shell = new ListTasksCommands(backend);
     }
 
-
     @Test
     public void testListTasksWithEmptyList() {
-
         List<Task> taskList = new ArrayList<>();
         when(backend.getTaskLines()).thenReturn(taskList);
     }
@@ -66,12 +64,19 @@ public class ListTaskCommandsTest {
 
     @Test
     public void addTask() {
-
         Task expectedTask = new Task("Das ist ein neuer Task für @Hause aus dem +Projekt");
-
         shell.add("Das", "ist", "ein", "neuer", "Task", "für", "@Hause", "aus", "dem", "+Projekt");
         verify(backend).addTask(expectedTask);
+    }
 
+    @Test
+    public void testListContexts(){
+        List<Task> taskList = new ArrayList<>();
+        taskList.add(new Task("@Context1"));
+        taskList.add(new Task("@Context2"));
+        when(backend.getContexts()).thenReturn(taskList);
+        String expected ="@Context1\n@Context2\n";
+        Assert.assertEquals("Returned contexts were not correct.", expected, shell.listContexts());
 
     }
 }

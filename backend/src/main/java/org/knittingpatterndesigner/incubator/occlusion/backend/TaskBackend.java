@@ -16,7 +16,15 @@ public class TaskBackend implements Backend {
 
     private List<Task> taskLines;
 
+    private List<Task> contexts;
+
     private Storage storage;
+
+    public void setTaskFolder(String taskFolder) {
+        this.taskFolder = taskFolder;
+    }
+
+    private String taskFolder;
 
     @Inject
     public TaskBackend(Storage storage) {
@@ -25,10 +33,9 @@ public class TaskBackend implements Backend {
 
 
     @Override
-    public void loadTasks(String pathToTaskFolder) {
-        System.out.println("TaskBackend.loadTasks(" + pathToTaskFolder + ")");
-        this.taskLines = this.storage.loadTasks(pathToTaskFolder);
-        System.out.println("Loaded number of tasks: " + this.taskLines.size());
+    public void loadTasks() {
+        this.taskLines = this.storage.loadTasks(taskFolder + "/todo.txt");
+        this.contexts = this.storage.loadTasks(taskFolder + "/contexts.txt");
     }
 
     @Override
@@ -68,6 +75,12 @@ public class TaskBackend implements Backend {
     public void addTask(Task task) {
 
         this.taskLines.add(task);
-        this.storage.storeTasks(taskLines);
+        this.storage.storeTasksToFile(taskLines, taskFolder + "/todo.txt");
+    }
+
+    @Override
+    public List<Task> getContexts() {
+
+        return makeImmutable(contexts);
     }
 }

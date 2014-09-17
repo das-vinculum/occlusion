@@ -20,7 +20,7 @@ public interface Storage {
      *
      * @param tasks The list containing the tasks.
      */
-    void storeTasks(List<Task> tasks);
+    void storeTasksToFile(List<Task> tasks, String pathToFile);
 
     List<File> getTaskFiles(File folder);
 }

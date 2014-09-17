@@ -23,7 +23,8 @@ public class ListTasksCommands {
     }
 
     public void loadFiles(String folder) {
-        this.backend.loadTasks(folder);
+        this.backend.setTaskFolder(folder);
+        this.backend.loadTasks();
     }
 
     @Command(name = "list-tasks", abbrev = "l", description = "This lists all tasks stored in your todo.txt.")
@@ -67,5 +68,10 @@ public class ListTasksCommands {
         }
         Task taskObject = new Task(builder.toString());
         backend.addTask(taskObject);
+    }
+
+    @Command(name = "list-contexts", abbrev = "lcs", description = "This lists all contexts available.")
+    public String listContexts() {
+        return prepareListOfTasksForPrintingOnScreen(this.backend.getContexts());
     }
 }

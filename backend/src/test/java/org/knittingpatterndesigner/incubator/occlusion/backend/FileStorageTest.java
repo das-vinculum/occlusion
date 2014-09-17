@@ -15,17 +15,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
 public class FileStorageTest {
 
     private File taskTxt;
 
     private List<String> fileContent;
+
     private FileStorage fileStorage;
 
     @Before
     public void setUp() throws Exception {
-
         fileStorage = new FileStorage();
         this.fileContent = new ArrayList<>();
         URL url = getClass().getClassLoader().getResource("org/knittingpatterndesigner/incubator/occlusion/todo.txt");
@@ -34,7 +33,6 @@ public class FileStorageTest {
         BufferedReader bufferedReader = new BufferedReader(reader);
         String buffer = bufferedReader.readLine();
         while (buffer != null) {
-
             this.fileContent.add(buffer);
             buffer = bufferedReader.readLine();
         }
@@ -47,13 +45,11 @@ public class FileStorageTest {
     public void testListTodoFiles() {
         URL url = getClass().getClassLoader().getResource("org/knittingpatterndesigner/incubator/occlusion/fetchTaskFiles");
         File folder = new File(url.getFile());
-
         List<File> taskFiles = this.fileStorage.getTaskFiles(folder);
         List<File> founded = Arrays.asList(folder.listFiles(new TaskFileNameFilter()));
         Assert.assertEquals("Fetched too much files.", founded.size(), taskFiles.size());
         for (File taskFile : founded) {
             if (taskFile.getName().matches(".*\\.txt")) {
-
                 Assert.assertTrue(taskFiles.contains(taskFile));
             }
         }
@@ -61,7 +57,6 @@ public class FileStorageTest {
 
     @Test
     public void testLoadEmptyFile() {
-
         URL url = getClass().getClassLoader().getResource("org/knittingpatterndesigner/incubator/occlusion/empty.txt");
         File workfile = new File(url.getFile());
         List<Task> tasks = this.fileStorage.loadTasks(workfile.getAbsolutePath());
@@ -70,7 +65,6 @@ public class FileStorageTest {
 
     @Test
     public void testLoadTasks() throws Exception {
-
         List<Task> tasks = this.fileStorage.loadTasks(taskTxt.getAbsolutePath());
         Assert.assertEquals("Wrong number of loaded lines", this.fileContent.size(), tasks.size());
         for (int i = 0; i < this.fileContent.size(); i++) {
@@ -80,7 +74,6 @@ public class FileStorageTest {
 
     @Test
     public void testStoreTasks() throws IOException {
-
         URL url = getClass().getClassLoader().getResource("org/knittingpatterndesigner/incubator/occlusion/tmp.txt");
         File workfile = new File(url.getFile());
         Files.copy(this.taskTxt.toPath(), workfile.toPath(), StandardCopyOption.REPLACE_EXISTING);
@@ -88,7 +81,7 @@ public class FileStorageTest {
         List<Task> tasks = this.fileStorage.loadTasks(workfile.getAbsolutePath());
         tasks.add(new Task("Another task"));
 
-        this.fileStorage.storeTasks(tasks);
+        this.fileStorage.storeTasksToFile(tasks,url.getFile());
         List<Task> reloadedTasks = this.fileStorage.loadTasks(workfile.getAbsolutePath());
         Assert.assertEquals("Tasks was not stored", tasks.size(), reloadedTasks.size());
 
