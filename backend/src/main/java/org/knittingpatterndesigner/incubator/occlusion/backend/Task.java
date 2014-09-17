@@ -17,7 +17,6 @@ public class Task {
      */
     public Task(String taskString) {
         this.originalLine = taskString;
-
     }
 
     /**
@@ -51,10 +50,8 @@ public class Task {
      */
     public boolean isProject(String project) {
         if (project.startsWith("+")) {
-
             return originalLine.contains(project);
         } else {
-
             return originalLine.contains("+" + project);
         }
     }
@@ -66,12 +63,18 @@ public class Task {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Task task = (Task) o;
 
-        if (!originalLine.equals(task.originalLine)) return false;
+        if (!originalLine.equals(task.originalLine)) {
+            return false;
+        }
 
         return true;
     }
@@ -79,5 +82,9 @@ public class Task {
     @Override
     public int hashCode() {
         return originalLine.hashCode();
+    }
+
+    public String getContext() {
+        return originalLine.substring(originalLine.indexOf('@'), originalLine.indexOf(' ', originalLine.indexOf('@')));
     }
 }

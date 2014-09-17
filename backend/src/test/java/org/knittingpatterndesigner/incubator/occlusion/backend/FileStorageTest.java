@@ -81,7 +81,7 @@ public class FileStorageTest {
         List<Task> tasks = this.fileStorage.loadTasks(workfile.getAbsolutePath());
         tasks.add(new Task("Another task"));
 
-        this.fileStorage.storeTasksToFile(tasks,url.getFile());
+        this.fileStorage.storeTasksToFile(tasks, url.getFile());
         List<Task> reloadedTasks = this.fileStorage.loadTasks(workfile.getAbsolutePath());
         Assert.assertEquals("Tasks was not stored", tasks.size(), reloadedTasks.size());
 

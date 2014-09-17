@@ -16,7 +16,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ListTaskCommandsTest {
+public class ListTasksCommandsTest {
 
     private ListTasksCommands shell;
 
@@ -39,7 +39,7 @@ public class ListTaskCommandsTest {
         List<Task> taskList = new ArrayList<>();
         taskList.add(new Task("task1"));
         when(backend.getTaskLines()).thenReturn(taskList);
-        Assert.assertEquals("listTasks did not return proper line", "task1\n", shell.listTasks());
+        Assert.assertEquals("listTasks did not return proper line", prepareListForCheck(taskList), shell.listTasks());
     }
 
     @Test
@@ -48,8 +48,7 @@ public class ListTaskCommandsTest {
         taskList.add(new Task("@Context task1"));
         taskList.add(new Task("@Context task2"));
         when(backend.getTasksForContext("Context")).thenReturn(taskList);
-        String expected = "@Context task1\n@Context task2\n";
-        Assert.assertEquals("listTasks did not return proper line", expected, shell.listTasksByContext("Context"));
+        Assert.assertEquals("listTasks did not return proper line", prepareListForCheck(taskList), shell.listTasksByContext("Context"));
     }
 
     @Test
@@ -58,8 +57,7 @@ public class ListTaskCommandsTest {
         taskList.add(new Task("@Context task1 +project"));
         taskList.add(new Task("@Context task2 +project"));
         when(backend.getTasksForProject("project")).thenReturn(taskList);
-        String expected = "@Context task1 +project\n@Context task2 +project\n";
-        Assert.assertEquals("listTasks did not return proper line", expected, shell.listTasksByProject("project"));
+        Assert.assertEquals("listTasks did not return proper line", prepareListForCheck(taskList), shell.listTasksByProject("project"));
     }
 
     @Test
@@ -70,13 +68,22 @@ public class ListTaskCommandsTest {
     }
 
     @Test
-    public void testListContexts(){
+    public void testListContexts() {
         List<Task> taskList = new ArrayList<>();
         taskList.add(new Task("@Context1"));
         taskList.add(new Task("@Context2"));
         when(backend.getContexts()).thenReturn(taskList);
-        String expected ="@Context1\n@Context2\n";
-        Assert.assertEquals("Returned contexts were not correct.", expected, shell.listContexts());
+        Assert.assertEquals("Returned contexts were not correct.", prepareListForCheck(taskList)
+                , shell.listContexts());
 
+    }
+
+    private String prepareListForCheck(List<Task> tasks) {
+        StringBuilder builder = new StringBuilder();
+        for (Task task : tasks) {
+            builder.append(task.getOriginalLine());
+            builder.append("\n");
+        }
+        return builder.toString();
     }
 }

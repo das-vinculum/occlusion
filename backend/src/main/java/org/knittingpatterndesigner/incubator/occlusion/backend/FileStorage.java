@@ -30,7 +30,7 @@ public class FileStorage implements Storage {
     }
 
     @Override
-    public void storeTasksToFile(List<Task> tasks,String pathToFile) {
+    public void storeTasksToFile(List<Task> tasks, String pathToFile) {
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(pathToFile))) {
             for (int i = 0; i < tasks.size(); i++) {

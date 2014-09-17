@@ -8,6 +8,7 @@ import java.util.List;
 public interface Backend {
 
     void setTaskFolder(String taskFolder);
+
     /**
      * This function loads the files from the filesystem.
      */
