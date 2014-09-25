@@ -92,13 +92,6 @@ public class TaskBackendTest {
         compareListsForEquality(tasks, retrievedTasks);
     }
 
-    private void compareListsForEquality(List<Task> expectedTasks, List<Task> retrievedTasks) {
-        Assert.assertEquals("Not all retrieved", expectedTasks.size(), retrievedTasks.size());
-        for (int i = 0; i < retrievedTasks.size(); i++) {
-            Assert.assertEquals(expectedTasks.get(i), retrievedTasks.get(i));
-        }
-    }
-
     @Test
     public void testListContexts() {
         List<Task> contexts = new ArrayList<>();
@@ -110,4 +103,12 @@ public class TaskBackendTest {
         List<Task> receivedList = backend.getContexts();
         compareListsForEquality(contexts, receivedList);
     }
+
+    private void compareListsForEquality(List<Task> expectedTasks, List<Task> retrievedTasks) {
+        Assert.assertEquals("Not all retrieved", expectedTasks.size(), retrievedTasks.size());
+        for (int i = 0; i < retrievedTasks.size(); i++) {
+            Assert.assertEquals(expectedTasks.get(i), retrievedTasks.get(i));
+        }
+    }
+
 }

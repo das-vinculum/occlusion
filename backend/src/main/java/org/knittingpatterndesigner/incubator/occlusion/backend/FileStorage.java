@@ -14,12 +14,14 @@ public class FileStorage implements Storage {
     @Override
     public List<Task> loadTasks(String pathToFile) {
 
+        int lineCounter = 1;
         List<Task> taskLines = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(pathToFile))) {
             String buffer = reader.readLine();
             while (buffer != null) {
-                taskLines.add(new Task(buffer));
+                taskLines.add(new Task(buffer, lineCounter));
                 buffer = reader.readLine();
+                lineCounter = lineCounter + 1;
             }
         } catch (FileNotFoundException e) {
             System.out.println("File could not be found. " + pathToFile);

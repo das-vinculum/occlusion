@@ -69,6 +69,7 @@ public class FileStorageTest {
         Assert.assertEquals("Wrong number of loaded lines", this.fileContent.size(), tasks.size());
         for (int i = 0; i < this.fileContent.size(); i++) {
             Assert.assertEquals("Wrong content loaded", this.fileContent.get(i), tasks.get(i).getOriginalLine());
+            Assert.assertEquals("Wrong line number stored",i+1, tasks.get(i).getLinenumber());
         }
     }
 

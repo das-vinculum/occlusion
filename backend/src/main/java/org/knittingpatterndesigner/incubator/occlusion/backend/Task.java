@@ -9,6 +9,7 @@ public class Task {
      * This is the line as read from the file.
      */
     private String originalLine;
+    private int linenumber;
 
     /**
      * Initalize the class and setting the given string as original line.
@@ -17,6 +18,27 @@ public class Task {
      */
     public Task(String taskString) {
         this.originalLine = taskString;
+        this.linenumber = Integer.MAX_VALUE;
+    }
+
+    /**
+     * Initalize the class and setting the given string as original line.
+     *
+     * @param taskString The line as read from the file.
+     * @param linenumber The number of the line in the file.
+     */
+    public Task(String taskString, int linenumber) {
+        this.originalLine = taskString;
+        this.linenumber = linenumber;
+    }
+
+    /**
+     * Returns the number of the line in the file
+     *
+     * @return number of the line
+     */
+    public int getLinenumber() {
+        return linenumber;
     }
 
     /**
