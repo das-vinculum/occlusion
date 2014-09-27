@@ -43,7 +43,7 @@ public class ListTasksCommands {
         StringBuffer result = new StringBuffer();
         for (Task line : taskLines) {
 
-            result.append(line.getOriginalLine()).append("\n");
+            result.append(line.getLinenumber()).append(':').append(' ').append(line.getOriginalLine()).append("\n");
         }
         return result.toString();
     }

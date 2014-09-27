@@ -81,6 +81,7 @@ public class ListTasksCommandsTest {
     private String prepareListForCheck(List<Task> tasks) {
         StringBuilder builder = new StringBuilder();
         for (Task task : tasks) {
+            builder.append(task.getLinenumber()).append(':').append(' ');
             builder.append(task.getOriginalLine());
             builder.append("\n");
         }
