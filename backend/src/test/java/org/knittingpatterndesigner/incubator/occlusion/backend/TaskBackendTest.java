@@ -11,6 +11,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.fest.assertions.Assertions.assertThat;
+import static org.mockito.Matchers.anyList;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -102,6 +104,34 @@ public class TaskBackendTest {
         backend.loadTasks();
         List<Task> receivedList = backend.getContexts();
         compareListsForEquality(contexts, receivedList);
+    }
+
+    @Test
+    public void testMarkTaskAsDone() {
+
+        List<Task> contexts = new ArrayList<>();
+        List<Task> done = new ArrayList<>();
+        List<Task> tasks = new ArrayList<>();
+        tasks.add(new Task("task1", 1));
+        Task taskToMarkAsDone = new Task("task2", 2);
+        tasks.add(taskToMarkAsDone);
+        tasks.add(new Task("task3", 3));
+        tasks.add(new Task("task4", 4));
+
+        when(storage.loadTasks("folder/todo.txt")).thenReturn(tasks);
+        when(storage.loadTasks("folder/contexts.txt")).thenReturn(contexts);
+        when(storage.loadTasks("folder/done.txt")).thenReturn(done);
+
+        backend.setTaskFolder("folder");
+        backend.loadTasks();
+
+        backend.markTaskAsDone(2);
+        assertThat(backend.getTaskLines().size()).isEqualTo(3);
+        assertThat(backend.getTaskLines().contains(taskToMarkAsDone)).isFalse();
+        assertThat(backend.getDone().size()).isEqualTo(1);
+        assertThat(backend.getDone().contains(taskToMarkAsDone)).isTrue();
+        verify(storage).storeTasksToFile(anyList(), eq("folder/done.txt"));
+        verify(storage).storeTasksToFile(anyList(), eq("folder/todo.txt"));
     }
 
     private void compareListsForEquality(List<Task> expectedTasks, List<Task> retrievedTasks) {

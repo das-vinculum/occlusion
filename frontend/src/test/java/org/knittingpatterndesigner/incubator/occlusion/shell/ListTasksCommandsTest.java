@@ -12,6 +12,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -75,7 +76,15 @@ public class ListTasksCommandsTest {
         when(backend.getContexts()).thenReturn(taskList);
         Assert.assertEquals("Returned contexts were not correct.", prepareListForCheck(taskList)
                 , shell.listContexts());
+    }
 
+    @Test
+    public void testMarkTaskAsDone(){
+       List<Task> taskList = new ArrayList<>();
+        taskList.add(new Task("@Context task1"));
+        taskList.add(new Task("@Context task3"));
+        assertThat(shell.markTaskAsDone(2)).isEqualTo("Task 2 has been marked as done.");
+        verify(backend).markTaskAsDone(2);
     }
 
     private String prepareListForCheck(List<Task> tasks) {

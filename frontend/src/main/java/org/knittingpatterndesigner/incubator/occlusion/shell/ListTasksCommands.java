@@ -74,4 +74,10 @@ public class ListTasksCommands {
     public String listContexts() {
         return prepareListOfTasksForPrintingOnScreen(this.backend.getContexts());
     }
+
+    @Command(name = "mark-task-done", abbrev = "do", description = "This marks a task as being done")
+    public String markTaskAsDone(int lineNumber) {
+        this.backend.markTaskAsDone(lineNumber);
+        return "Task " + lineNumber + " has been marked as done.";
+    }
 }

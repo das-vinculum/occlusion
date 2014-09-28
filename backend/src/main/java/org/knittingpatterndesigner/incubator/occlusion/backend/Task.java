@@ -109,4 +109,8 @@ public class Task {
     public String getContext() {
         return originalLine.substring(originalLine.indexOf('@'), originalLine.indexOf(' ', originalLine.indexOf('@')));
     }
+
+    public void setLinenumber(int linenumber) {
+        this.linenumber = linenumber;
+    }
 }

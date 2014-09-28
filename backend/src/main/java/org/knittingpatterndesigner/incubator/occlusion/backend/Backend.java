@@ -50,4 +50,8 @@ public interface Backend {
      * @return An immutable list of contexts.
      */
     List<Task> getContexts();
+
+    void markTaskAsDone(int i);
+
+    List<Task> getDone();
 }

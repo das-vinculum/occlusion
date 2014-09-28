@@ -18,12 +18,9 @@ public class TaskBackend implements Backend {
 
     private List<Task> contexts;
 
+    private List<Task> done;
+
     private Storage storage;
-
-    public void setTaskFolder(String taskFolder) {
-        this.taskFolder = taskFolder;
-    }
-
     private String taskFolder;
 
     @Inject
@@ -31,11 +28,27 @@ public class TaskBackend implements Backend {
         this.storage = storage;
     }
 
+    public void setTaskFolder(String taskFolder) {
+        this.taskFolder = taskFolder;
+    }
 
     @Override
     public void loadTasks() {
-        this.taskLines = this.storage.loadTasks(taskFolder + "/todo.txt");
-        this.contexts = this.storage.loadTasks(taskFolder + "/contexts.txt");
+        this.taskLines = this.storage.loadTasks(getPathToTodoFile());
+        this.contexts = this.storage.loadTasks(getPathToContextsFile());
+        this.done = this.storage.loadTasks(getPathToDoneFile());
+    }
+
+    private String getPathToDoneFile() {
+        return taskFolder + "/done.txt";
+    }
+
+    private String getPathToContextsFile() {
+        return taskFolder + "/contexts.txt";
+    }
+
+    private String getPathToTodoFile() {
+        return taskFolder + "/todo.txt";
     }
 
     @Override
@@ -75,12 +88,32 @@ public class TaskBackend implements Backend {
     public void addTask(Task task) {
 
         this.taskLines.add(task);
-        this.storage.storeTasksToFile(taskLines, taskFolder + "/todo.txt");
+        this.storage.storeTasksToFile(taskLines, getPathToTodoFile());
     }
 
     @Override
     public List<Task> getContexts() {
 
         return makeImmutable(contexts);
+    }
+
+    @Override
+    public void markTaskAsDone(int taskLineNumber) {
+        for (int i = 0; i < taskLines.size(); i++) {
+            if (taskLines.get(i).getLinenumber() == taskLineNumber) {
+                Task taskToBeMarked = this.taskLines.get(i);
+                this.taskLines.remove(i);
+                taskToBeMarked.setLinenumber(done.size());
+                done.add(taskToBeMarked);
+                this.storage.storeTasksToFile(taskLines, getPathToTodoFile());
+                this.storage.storeTasksToFile(done, getPathToDoneFile());
+                break;
+            }
+        }
+    }
+
+    @Override
+    public List<Task> getDone() {
+        return makeImmutable(done);
     }
 }
