@@ -9,7 +9,7 @@ import java.io.IOException;
 /**
  * This class initalizes everything and brings the tool up.
  */
-public class OcclusionShellStarter {
+class OcclusionShellStarter {
 
     public static void main(String[] args) throws IOException {
 

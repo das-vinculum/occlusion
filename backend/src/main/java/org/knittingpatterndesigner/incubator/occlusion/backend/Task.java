@@ -8,7 +8,7 @@ public class Task {
     /**
      * This is the line as read from the file.
      */
-    private String originalLine;
+    private final String originalLine;
     private int linenumber;
 
     /**
@@ -94,11 +94,8 @@ public class Task {
 
         Task task = (Task) o;
 
-        if (!originalLine.equals(task.originalLine)) {
-            return false;
-        }
+        return originalLine.equals(task.originalLine);
 
-        return true;
     }
 
     @Override

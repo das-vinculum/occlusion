@@ -11,7 +11,7 @@ import org.knittingpatterndesigner.incubator.occlusion.backend.TaskBackend;
  * Created by: florianzeidler
  * Created: 26.08.14
  */
-public class ShellFrontendModule extends AbstractModule {
+class ShellFrontendModule extends AbstractModule {
 
 
     @Override

@@ -20,7 +20,7 @@ public class TaskBackend implements Backend {
 
     private List<Task> done;
 
-    private Storage storage;
+    private final Storage storage;
     private String taskFolder;
 
     @Inject

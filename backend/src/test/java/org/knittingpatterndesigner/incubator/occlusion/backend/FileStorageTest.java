@@ -48,11 +48,10 @@ public class FileStorageTest {
         List<File> taskFiles = this.fileStorage.getTaskFiles(folder);
         List<File> founded = Arrays.asList(folder.listFiles(new TaskFileNameFilter()));
         Assert.assertEquals("Fetched too much files.", founded.size(), taskFiles.size());
-        for (File taskFile : founded) {
-            if (taskFile.getName().matches(".*\\.txt")) {
+        founded.forEach((taskFile) -> {
+            if (taskFile.getName().matches(".*\\.txt"))
                 Assert.assertTrue(taskFiles.contains(taskFile));
-            }
-        }
+        });
     }
 
     @Test
@@ -69,7 +68,7 @@ public class FileStorageTest {
         Assert.assertEquals("Wrong number of loaded lines", this.fileContent.size(), tasks.size());
         for (int i = 0; i < this.fileContent.size(); i++) {
             Assert.assertEquals("Wrong content loaded", this.fileContent.get(i), tasks.get(i).getOriginalLine());
-            Assert.assertEquals("Wrong line number stored",i+1, tasks.get(i).getLinenumber());
+            Assert.assertEquals("Wrong line number stored", i + 1, tasks.get(i).getLinenumber());
         }
     }
 

@@ -5,7 +5,7 @@ import com.google.inject.AbstractModule;
 /**
  * This is the module encapsulating all the backend parts.
  */
-public class BackendModule extends AbstractModule {
+class BackendModule extends AbstractModule {
 
     @Override
     protected void configure() {

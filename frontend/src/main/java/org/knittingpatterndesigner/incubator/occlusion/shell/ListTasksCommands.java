@@ -12,9 +12,9 @@ import java.util.List;
 /**
  * Main starting point for the shell interface
  */
-public class ListTasksCommands {
+class ListTasksCommands {
 
-    private Backend backend;
+    private final Backend backend;
 
     @Inject
     public ListTasksCommands(Backend backend) {

@@ -8,7 +8,7 @@ import java.io.FilenameFilter;
  * Created by: florianzeidler
  * Created: 14.09.14
  */
-public class TaskFileNameFilter implements FilenameFilter {
+class TaskFileNameFilter implements FilenameFilter {
     @Override
     public boolean accept(File dir, String name) {
         return name.matches(".*\\.txt");

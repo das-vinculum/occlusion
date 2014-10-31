@@ -9,9 +9,9 @@ import java.net.URL;
 
 public class TaskFileNameFilterTest {
 
-    TaskFileNameFilter fileNameFilter;
+    private TaskFileNameFilter fileNameFilter;
 
-    File folder;
+    private File folder;
 
     @Before
     public void setUp() {
